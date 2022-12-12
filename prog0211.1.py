@@ -18,10 +18,10 @@ if __name__ == '__main__':
         freq = ET.SubElement(root, "row")
         ET.SubElement(freq, "x").text = "{}".format(x[i])
         ET.SubElement(freq, "y").text = "{}".format(y[i])
-
-if not os.path.exists('results'):
-    os.mkdir('results')
+    if not os.path.exists('results'):
+        os.mkdir('results')
     os.chdir(os.path.join(os.getcwd(), 'results'))
     tree = ET.ElementTree(root)
     ET.indent(tree, '  ')
     tree.write("prog0211.1.xml", encoding="utf-8", xml_declaration=True)
+
