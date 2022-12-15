@@ -48,9 +48,10 @@ if __name__=='__main__':
     result = lamda**2/np.pi*abs(sigma(70,k*r))**2
     print('sigma = ',result)
     plt.plot(2*np.pi*r/lamda,result/(np.pi*r**2))
+    plt.xlabel('f, Гц')
+    plt.ylabel(u'\u03C3, м^2')
     plt.show()
     plt.plot(f,result)
-    plt.show()
 
     with open("prog0211.2.csv", "w", encoding="utf-8") as file:
         for i in range(len(f)):
