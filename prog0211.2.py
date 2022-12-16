@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import urllib.request
 import scipy as sc
 import numpy as np
@@ -23,8 +24,8 @@ def sigma(povtor,x):
 
 if __name__=='__main__':
     url = 'https://jenyay.net/uploads/Student/Modelling/task_02.csv'
-    urllib.request.urlretrieve(url, 'prog0211.d.csv')
-    with open('prog0211.d.csv', 'r') as file:
+    urllib.request.urlretrieve(url, 'prog0211.d.xml')
+    with open('prog0211.d.xml', 'r') as file:
         book = file.readlines()
     var = int(input('Введите ваш вариант: '))
     shkala = int(input('Введите приближение(число шагов): '))
@@ -33,26 +34,26 @@ if __name__=='__main__':
     book1 = re.findall('\d+[.]*\d*e*[-]*\d*', book[var])
     D = float(book1[1])
     print('D= ',D)
-    fmin = float(book1[2])
+    fmin = int(float(book1[2]))
     print('fmin= ',fmin)
-    fmax = float(book1[3])
+    fmax = int(float(book1[3]))
     print('fmax= ',fmax)
     r = D/2
     print('r= ',r)
     f = np.linspace(fmin,fmax,shkala)
+    c=3*10**8
     print('f= ',f)
-    lamda = 3*10**8/f
+    lamda = c/f
     print('lamda= ',lamda)
     k = 2*np.pi/lamda
     print('k= ',k)
     result = lamda**2/np.pi*abs(sigma(70,k*r))**2
     print('sigma = ',result)
-    plt.plot(2*np.pi*r/lamda,result/(np.pi*r**2))
+    plt.plot(f,result)
     plt.xlabel('f, Гц')
     plt.ylabel(u'\u03C3, м^2')
     plt.show()
-    plt.plot(f,result)
-
+   
     with open("prog0211.2.csv", "w", encoding="utf-8") as file:
         for i in range(len(f)):
-            file.write('номер строки: {}, f: {}, ЭПР: {}\n'.format(i+1, f[i], result[i]))
+            file.write('{}, {}, {}\n'.format(i+1, f[i], result[i]))
