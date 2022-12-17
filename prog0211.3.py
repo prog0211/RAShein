@@ -366,7 +366,7 @@ if __name__ == '__main__':
 
     # Параметры моделирования
     # Частота сигнала, Гц
-    f_Hz = 1.0e9
+    f_Hz = 2.0e9
 
     # Дискрет по пространству в м
     dx = 2e-3
@@ -393,7 +393,7 @@ if __name__ == '__main__':
     layers_cont = [LayerContinuous(xmin = 0, eps = 4.5, sigma = 0.0)]
 
     # Скорость обновления графика поля
-    speed_refresh = 20
+    speed_refresh = 120
 
     # Дискрет по времени
     dt = dx * Sc / c
@@ -426,7 +426,7 @@ if __name__ == '__main__':
     print(f'Количество отсчетов на длину волны (Nl): {Nl}')
     probes_m_str = ', '.join(['{:.6f}'.format(pos) for pos in probesPos_m])
     print(f'Дискрет по пространству: {dx} м')
-    print(f'Дискрет по времени: {dt * 1e9} нс')
+    print(f'Дискрет по времени: {dt * 1e12} пс')
     print(f'Координата пробника [м]: {probes_m_str}')
     print()
     print(f'Размер области моделирования: {maxSize} отсч.')
@@ -518,10 +518,10 @@ if __name__ == '__main__':
 
     # Построение спектра
     plt.figure(3)
-    t  = np.arange(1250)
-    sp  = np.fft.fft(Ez)
-    freq = np.fft.fftfreq(t.shape[-1])
-    plt.plot (abs(freq[:100]) * 10e9, (sp.real[:100] **2 + sp.imag[:100] ** 2) / max(abs(sp.real[:100] **2 + sp.imag[:100] ** 2)))
+
+    sp  = np.fft.fft(probes[0].E)
+    freq = np.fft.fftfreq(maxTime, dt)
+    plt.plot (freq[:200], abs(sp[:200])/(max(abs(sp[:200]))))
     plt.xlabel('f, ГГц')
     display.stop()
     plt.show()
